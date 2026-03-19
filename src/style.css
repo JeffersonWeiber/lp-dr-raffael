@@ -344,10 +344,10 @@ a {
 }
 
 .section-cta {
-  margin-top: 1.35rem;
+  margin-top: 2.22rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
   border: 1px solid var(--line);
