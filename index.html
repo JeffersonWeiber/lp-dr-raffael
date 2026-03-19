@@ -458,61 +458,71 @@
           </div>
         </div>
       <section id="materiais" class="section lead-magnet" data-aos="fade-up">
-        <div class="site-shell lead-magnet-grid">
-          <article class="lead-magnet-content">
-            <span class="badge">Ebook Gratuito</span>
-            <h2>Aprofunde seu conhecimento com materiais gratuitos</h2>
-            <p>
-              Preparamos um guia prático exclusivo para ajudar você e sua família a entenderem melhor os sinais, os diagnósticos e os caminhos de tratamento para a saúde mental.
-            </p>
-            
-            <form
-              action="https://formsubmit.co/contato@drraffaelslaviero.com.br"
-              method="POST"
-              class="lead-form"
-            >
-              <!-- Honeypot para evitar spam -->
-              <input type="text" name="_honey" style="display:none">
-              <!-- Página de fallback após sucesso, ou manter a do Formsubmit por enquanto -->
-              <input type="hidden" name="_next" value="https://drraffaelslaviero.com.br">
-              <!-- Capturar assunto -->
-              <input type="hidden" name="_subject" value="Novo Lead do Ebook Gratuito!">
-              
-              <div class="form-group">
-                <label for="lead_name" class="sr-only">Seu nome</label>
-                <input
-                  type="text"
-                  id="lead_name"
-                  name="Nome"
-                  class="input-elegant"
-                  placeholder="Seu nome"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="lead_email" class="sr-only">Seu melhor e-mail</label>
-                <input
-                  type="email"
-                  id="lead_email"
-                  name="Email"
-                  class="input-elegant"
-                  placeholder="Seu melhor e-mail"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn-primary" aria-label="Baixar e-book gratuito">
-                Baixar material agora
-              </button>
-              <p class="form-disclaimer">Enviaremos o guia para seu e-mail imediatamente após a inscrição.</p>
-            </form>
-          </article>
+        <div class="site-shell">
+          <div class="lead-magnet-container">
+            <header class="lead-magnet-header text-center">
+              <span class="badge">Materiais Gratuitos</span>
+              <h2>E-books para você aprofundar seu conhecimento e sair das dúvidas</h2>
+              <p>Escolha o e-book ideal para o seu momento atual. Você receberá o material exclusivo diretamente no seu e-mail de forma gratuita.</p>
+            </header>
 
-          <aside class="lead-magnet-visual">
-            <div class="ebook-card">
-              <img src="/ebook-mockup.webp" alt="Capa do Ebook Guia Prático de Saúde Mental" class="ebook-img" />
-              <div class="ebook-glow"></div>
+            <div class="ebooks-showcase">
+              <div class="ebook-item">
+                <div class="ebook-cover ebook-bg-1">
+                  <span class="ebook-tag">Mais Baixado</span>
+                  <h3 class="ebook-title">10 Passos para Fortalecer sua Saúde Mental em 2026</h3>
+                </div>
+              </div>
+              <div class="ebook-item">
+                <div class="ebook-cover ebook-bg-2">
+                  <span class="ebook-tag">Uso Constante</span>
+                  <h3 class="ebook-title">Pornografia e Saúde Mental</h3>
+                </div>
+              </div>
+              <div class="ebook-item">
+                <div class="ebook-cover ebook-bg-3">
+                  <span class="ebook-tag">Mapeamento</span>
+                  <h3 class="ebook-title">Será que é só uma fase?</h3>
+                </div>
+              </div>
             </div>
-          </aside>
+
+            <div class="lead-form-wrap">
+              <form
+                action="https://formsubmit.co/contato@drraffaelslaviero.com.br"
+                method="POST"
+                class="lead-form mx-auto"
+                style="margin: 0 auto; max-width: 500px;"
+              >
+                <!-- Honeypot para evitar spam -->
+                <input type="text" name="_honey" style="display:none">
+                <!-- Capturar assunto -->
+                <input type="hidden" name="_subject" value="Novo Lead do Ebook Gratuito!">
+                
+                <div class="form-group">
+                  <label for="lead_name" class="sr-only">Seu nome</label>
+                  <input type="text" id="lead_name" name="Nome" class="input-elegant" placeholder="Seu nome" required />
+                </div>
+                <div class="form-group">
+                  <label for="lead_email" class="sr-only">Seu melhor e-mail</label>
+                  <input type="email" id="lead_email" name="Email" class="input-elegant" placeholder="Seu melhor e-mail" required />
+                </div>
+                <div class="form-group" style="margin-top:-0.5rem;">
+                  <label for="lead_ebook" class="sr-only">Selecione o E-book</label>
+                  <select id="lead_ebook" name="Ebook_Desejado" class="input-elegant" required style="cursor: pointer;">
+                    <option value="" disabled selected>Confirme qual E-book você quer baixar...</option>
+                    <option value="10 Passos para Fortalecer sua Saúde Mental em 2026">10 Passos para Fortalecer sua Saúde Mental em 2026</option>
+                    <option value="Pornografia e Saúde Mental">Pornografia e Saúde Mental</option>
+                    <option value="Será que é só uma fase?">Será que é só uma fase?</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn-primary" aria-label="Baixar e-book gratuito">
+                  Baixar material agora
+                </button>
+                <p class="form-disclaimer text-center" style="text-align: center;">Enviaremos o guia para seu e-mail imediatamente após a inscrição.</p>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 
