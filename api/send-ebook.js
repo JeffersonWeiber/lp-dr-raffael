@@ -8,9 +8,9 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 // Mapeamento de links dos e-books (Substitua pelos seus links reais)
 const EBOOK_LINKS = {
-  "Será que é só uma fase?": "https://seusite.com.br/ebooks/fase.pdf",
-  "Pornografia e Saúde Mental": "https://seusite.com.br/ebooks/pornografia.pdf",
-  "10 Passos para Fortalecer sua Saúde Mental em 2026": "https://seusite.com.br/ebooks/10passos.pdf"
+  "Será que é só uma fase?": "https://drraffaelslaviero.com.br/ebooks/fevereiro-2026-sera-que-e-so-uma fase.pdf",
+  "Pornografia e Saúde Mental": "https://drraffaelslaviero.com.br/ebooks/ebook-pornografia-e-saude-mental.pdf",
+  "10 Passos para Fortalecer sua Saúde Mental em 2026": "https://drraffaelslaviero.com.br/ebooks/10-passos-para-fortalecer-sua-saude mental-em-2026.pdf"
 };
 
 export default async function handler(req, res) {
