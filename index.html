@@ -493,12 +493,53 @@
         </div>
       </section>
 
-      <script>
+      <script type="module">
+        import { emailService } from './src/services/emailService.js';
+
+        const form = document.getElementById('ebook-form');
+        const ebookSelected = document.getElementById('ebook-selected');
+
         // Sincronizar radio dos cards com o campo hidden do form
         document.querySelectorAll('.ebook-radio-input').forEach(radio => {
           radio.addEventListener('change', () => {
-            document.getElementById('ebook-selected').value = radio.value;
+            ebookSelected.value = radio.value;
           });
+        });
+
+        // Interceptar envio do formulário
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const name = document.getElementById('lead_name').value;
+          const email = document.getElementById('lead_email').value;
+          const ebook = ebookSelected.value;
+
+          if (!ebook) {
+            alert('Por favor, selecione um e-book antes de continuar.');
+            return;
+          }
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerText;
+          
+          try {
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Enviando...';
+
+            // ATENÇÃO: Como não há backend real ainda, vamos simular ou avisar o usuário
+            // await emailService.sendEbook(name, email, ebook);
+            
+            console.log('Dados capturados:', { name, email, ebook });
+            
+            alert(`Obrigado, ${name}! Seu e-book "${ebook}" será enviado para ${email} em instantes.`);
+            form.reset();
+            ebookSelected.value = '';
+          } catch (error) {
+            alert('Ops! Ocorreu um erro ao processar seu pedido. Tente novamente em instantes.');
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = originalText;
+          }
         });
       </script>
 
