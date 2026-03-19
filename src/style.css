@@ -718,18 +718,80 @@ a {
   font-size: 0.9rem;
 }
 
-.section-cta-dark {
-  margin-top: 1.4rem;
-  justify-content: center;
-  border: 0;
-  background: transparent;
-  padding: 0;
+
+/* Seção de Sintomas */
+.symptoms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
 }
 
-.section-cta-dark .btn-secondary {
-  background: var(--gradient);
-  color: var(--white);
-  border: 0;
+.symptom-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  padding: 1.2rem 1.4rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.symptom-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+
+.symptom-check {
+  color: var(--primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.symptom-card span {
+  color: #475165;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 992px) {
+  .symptoms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .symptoms-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ajustes na Seção de Depoimentos */
+.depoimentos-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.depoimentos-head h2 {
+  margin-bottom: 0;
+}
+
+.btn-small {
+  padding: 0.7rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+.section-cta-dark {
+  display: none;
 }
 
 /* Nova Seção de Contato */
