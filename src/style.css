@@ -725,25 +725,28 @@ a {
   flex-direction: column;
   gap: 1.25rem;
   margin-top: 2rem;
+  align-items: flex-start; /* Alinhado à esquerda */
 }
 
 .hero-buttons-split {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 350px;
 }
 
 .btn-outline-white {
   flex: 1;
-  padding: 0.7rem 1.2rem;
+  padding: 0.5rem 0.8rem; /* Menor */
   border: 1px solid var(--primary);
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   color: var(--primary);
   text-decoration: none;
   font-weight: 700;
   text-align: center;
   transition: all 0.2s ease;
-  background: rgba(var(--primary-rgb), 0.05);
-  font-size: 0.85rem;
+  background: rgba(var(--primary-rgb), 0.03);
+  font-size: 0.75rem; /* Menor */
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -759,19 +762,18 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.9rem;
+  padding: 0.8rem 1.5rem;
   background: var(--gradient);
   color: white;
   border-radius: 0.5rem;
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  max-width: 400px;
-  margin: 0 auto;
+  margin: 0; /* Alinhado à esquerda */
 }
 
 .btn-accent-color:hover {
