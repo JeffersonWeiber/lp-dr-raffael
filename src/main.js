@@ -12,4 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
     initCarousel(carousel, testimonials);
   });
   initAOS();
+
+  // Cookie Consent Logic
+  const cookieBanner = document.getElementById("cookie-banner");
+  const acceptButton = document.getElementById("accept-cookies");
+
+  if (cookieBanner && acceptButton) {
+    if (!localStorage.getItem("cookiesAccepted")) {
+      setTimeout(() => {
+        cookieBanner.classList.add("show");
+      }, 1000);
+    }
+
+    acceptButton.addEventListener("click", () => {
+      localStorage.setItem("cookiesAccepted", "true");
+      cookieBanner.classList.remove("show");
+    });
+  }
 });
