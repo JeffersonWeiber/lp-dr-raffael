@@ -13,9 +13,8 @@ export const emailService = {
    * @param {string} ebookName - Nome do e-book selecionado
    */
   async sendEbook(name, email, ebookName) {
-    // URL da sua Edge Function (Ex: Supabase, Vercel, Netlify)
-    // ATENÇÃO: Substitua pela URL real após configurar seu backend
-    const EDGE_FUNCTION_URL = 'https://sua-url-aqui.supabase.co/functions/v1/send-ebook';
+    // URL da sua Vercel Function
+    const EDGE_FUNCTION_URL = '/api/send-ebook';
 
     try {
       const response = await fetch(EDGE_FUNCTION_URL, {

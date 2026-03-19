@@ -1,15 +1,12 @@
 /**
  * Vercel Serverless Function para Envio de E-book via Resend
  * 
- * Instruções para o Usuário:
- * 1. Crie um arquivo em 'api/send-ebook.js' no seu projeto.
- * 2. Adicione a variável de ambiente 'RESEND_API_KEY' no painel da Vercel.
- * 3. Instale o pacote do Resend: 'npm install resend' (ou use a API nativa via fetch como abaixo).
+ * Caminho: api/send-ebook.js
  */
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-// Mapeamento de links dos e-books
+// Mapeamento de links dos e-books (Substitua pelos seus links reais)
 const EBOOK_LINKS = {
   "Será que é só uma fase?": "https://seusite.com.br/ebooks/fase.pdf",
   "Pornografia e Saúde Mental": "https://seusite.com.br/ebooks/pornografia.pdf",
@@ -17,7 +14,7 @@ const EBOOK_LINKS = {
 };
 
 export default async function handler(req, res) {
-  // Configurar CORS
+  // CORS
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
@@ -32,11 +29,16 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Método não permitido' });
   }
 
   try {
     const { name, email, ebookName } = req.body;
+    
+    if (!name || !email || !ebookName) {
+      return res.status(400).json({ error: 'Dados incompletos' });
+    }
+
     const downloadLink = EBOOK_LINKS[ebookName] || EBOOK_LINKS["10 Passos para Fortalecer sua Saúde Mental em 2026"];
 
     const response = await fetch('https://api.resend.com/emails', {

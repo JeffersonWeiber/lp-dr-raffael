@@ -526,10 +526,9 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'Enviando...';
 
-            // ATENÇÃO: Como não há backend real ainda, vamos simular ou avisar o usuário
-            // await emailService.sendEbook(name, email, ebook);
+            await emailService.sendEbook(name, email, ebook);
             
-            console.log('Dados capturados:', { name, email, ebook });
+            console.log('E-mail enviado via Resend:', { name, email, ebook });
             
             alert(`Obrigado, ${name}! Seu e-book "${ebook}" será enviado para ${email} em instantes.`);
             form.reset();
