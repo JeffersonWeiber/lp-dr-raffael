@@ -698,29 +698,51 @@ a {
   margin-right: 2.5rem;
 }
 
-.testimonial-card {
+/* Estilo Geral (Branco - Usado na página de depoimentos) */
+.testimonial-card-static, .testimonial-card {
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.95rem;
+  background: var(--white);
+  box-shadow: 0 10px 22px rgba(27, 41, 77, 0.05);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-stars {
+  color: var(--primary);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.45rem;
+}
+
+.testimonial-text {
+  color: #5a6271;
+  font-size: 0.95rem;
+}
+
+/* Versão Azul (Usada apenas no Carrossel da Home) */
+.testimonial-card-blue {
   height: 100%;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.2rem;
-  background: var(--primary); /* Fundo Azul */
+  background: var(--primary);
   box-shadow: 0 20px 40px rgba(47, 66, 222, 0.15);
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centralizar horizontalmente */
+  align-items: center;
   text-align: center;
-  transition: transform 0.3s ease;
 }
 
-.testimonial-stars {
-  color: #ffcc00; /* Estrelas Amarelas */
+.testimonial-card-blue .testimonial-stars {
+  color: #ffcc00;
   font-size: 1.4rem;
-  letter-spacing: 0.1em;
   margin-bottom: 1rem;
 }
 
-.testimonial-text {
-  color: var(--white); /* Escrita Branca */
+.testimonial-card-blue .testimonial-text {
+  color: var(--white);
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.6;
