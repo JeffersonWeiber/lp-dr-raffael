@@ -26,12 +26,12 @@ export const emailService = {
           name,
           email,
           ebookName,
-          // Você pode adicionar um identificador para o download aqui se desejar
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Falha ao enviar o e-mail');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Falha ao enviar o e-mail');
       }
 
       return await response.json();

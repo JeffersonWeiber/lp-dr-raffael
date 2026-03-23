@@ -33,6 +33,7 @@
     </title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/style.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8sEmN5TN4OlR-HEiVcRQo4ZS1HWXWkio&libraries=places"></script>
     <link rel="preload" as="image" href="/backgroundHero.webp" />
 
     <script type="application/ld+json">
@@ -76,6 +77,7 @@
           <a href="#atendimento">Atendimento</a>
           <a href="#especialidades">Especialidades</a>
           <a href="#sobre">Sobre o médico</a>
+          <a href="/depoimentos.html">Relatos Reais</a>
           <a href="#contato">Contato</a>
           <a href="#duvidas">Dúvidas</a>
         </nav>
@@ -152,9 +154,10 @@
                 <h2>Dr. Raffael Sehn Slaviero</h2>
                 <p>Médico Psiquiatra</p>
                 <ul>
-                  <li>Graduação em Medicina - UEM</li>
+                  <li>Residência médica em Psiquiatria - UEM</li>
                   <li>Pós-graduação em Psiquiatria da Infância e Adolescência</li>
                   <li>Atuação clínica com adultos e público infantojuvenil</li>
+                  <li>Certificação Thiago Castro em andamento</li>
                 </ul>
               </div>
             </aside>
@@ -334,7 +337,7 @@
               target="_blank"
               rel="noopener noreferrer"
               class="btn-primary"
-              aria-label="Agendar consulta pelo WhatsApp"
+              aria-label="Agendar consulta especializada"
               >Agendar consulta especializada</a
             >
           </div>
@@ -354,7 +357,7 @@
           <article data-aos="fade-left">
             <h2>Quem é Raffael Sehn Slaviero?</h2>
             <p>
-              Dr. Raffael Sehn Slaviero é médico psiquiatra com formação pela
+              Dr. Raffael Sehn Slaviero é médico psiquiatra com residência médica pela
               Universidade Estadual de Maringá (UEM), CRM 38.831 e RQE 29.968,
               com atuação em saúde mental de adultos, crianças e adolescentes.
             </p>
@@ -367,8 +370,8 @@
             <div class="credential-grid">
               <span>CRM 38.831</span>
               <span>RQE 29.968</span>
-              <span>Medicina - UEM</span>
               <span>Psiquiatria da Infância e Adolescência</span>
+              <span>Certificação Thiago Castro em andamento</span>
             </div>
             <a
               class="btn-primary"
@@ -382,51 +385,35 @@
         </div>
       </section>
 
-      <section id="depoimentos" class="section section-dark">
+
+      <section id="atendimento" class="section section-soft">
         <div class="site-shell">
-          <header class="section-head depoimentos-head" data-aos="fade-up">
-            <h2>Relatos reais de pacientes e familiares</h2>
-            <a
-              href="/depoimentos.html"
-              class="btn-secondary btn-small"
-              aria-label="Ver todos os depoimentos"
-              >Ver todas as histórias</a
-            >
+          <header class="section-head" data-aos="fade-up">
+            <span class="badge">O que dizem os pacientes</span>
+            <h2>Avaliações oficiais no Google</h2>
           </header>
 
-          <div class="proof-gallery" data-aos="fade-up">
-            <img src="/depoimentos/1.webp" alt="Depoimento real 1" class="proof-img" />
-            <img src="/depoimentos/2.webp" alt="Depoimento real 2" class="proof-img" />
-            <img src="/depoimentos/3.webp" alt="Depoimento real 3" class="proof-img" />
-          </div>
-
-          <article class="carousel-wrapper" data-aos="fade-up" style="max-width: 800px; margin-left: auto; margin-right: auto;">
-            <button
-              id="prevBtn"
-              class="carousel-prev"
-              aria-label="Depoimento anterior"
-            >
-              ‹
+          <div class="testimonials-carousel-wrapper" data-aos="fade-up">
+            <button class="carousel-btn prev" aria-label="Anterior" id="google-prev-home">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <button
-              id="nextBtn"
-              class="carousel-next"
-              aria-label="Próximo depoimento"
-            >
-              ›
-            </button>
-            <div class="carousel-viewport">
-              <div
-                class="carousel-track"
-                data-carousel
-                data-visible-desktop="3"
-                data-visible-mobile="1"
-              ></div>
+            
+            <div class="testimonials-carousel-container" id="google-reviews-home">
+              <div class="loading-reviews">Conectando ao Google Meu Negócio...</div>
             </div>
-          </article>
+
+            <button class="carousel-btn next" aria-label="Próximo" id="google-next-home">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          
+          <div class="carousel-dots" id="google-dots-home"></div>
+          
+          <div class="center-content mt-8" style="display: flex; justify-content: center;">
+            <a href="/depoimentos.html" class="btn-secondary">Ver todos os relatos</a>
+          </div>
         </div>
       </section>
-
 
       <section id="materiais" class="section lead-magnet-new" data-aos="fade-up">
         <div class="site-shell">
@@ -439,7 +426,7 @@
               <p>Escolha o e-book ideal para o seu momento atual. Você receberá o material exclusivo diretamente no seu e-mail de forma gratuita.</p>
 
               <form
-                action="https://formsubmit.co/contato@drraffaelslaviero.com.br"
+                action="https://formsubmit.co/dr.raffaelslaviero@gmail.com"
                 method="POST"
                 class="lead-form-v2"
                 id="ebook-form"
@@ -655,7 +642,7 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
                 <div class="contact-info-text">
-                  <p>contato@drraffaelslaviero.com.br</p>
+                  <p>dr.raffaelslaviero@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -677,13 +664,13 @@
                   <div class="social-icon instagram">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                   </div>
-                  <span>@drraffaelslaviero</span>
+                  <span>@drraffaelslaviero.psiquiatra</span>
                 </a>
-                <a href="#" target="_blank" class="social-item-new">
+                <a href="https://www.facebook.com/profile.php?id=61550731185143" target="_blank" class="social-item-new">
                   <div class="social-icon facebook">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                   </div>
-                  <span>@drraffaelslaviero</span>
+                  <span>Dr-Raffael-Slaviero</span>
                 </a>
               </div>
             </div>
@@ -762,6 +749,7 @@
           <a href="#atendimento">Atendimento</a>
           <a href="#especialidades">Especialidades</a>
           <a href="#sobre">Sobre o médico</a>
+          <a href="/depoimentos.html">Relatos Reais</a>
           <a href="#contato">Contato</a>
         </nav>
 
@@ -802,6 +790,8 @@
     </div>
 
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/reviews-client.js"></script>
+    <script type="module" src="/src/carousel.js"></script>
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-KLK9P94V"

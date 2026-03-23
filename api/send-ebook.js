@@ -48,7 +48,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Dr. Raffael Slaviero <contato@drraffaelslaviero.com.br>',
+        from: 'Dr. Raffael Slaviero <dr.raffaelslaviero@gmail.com>',
         to: [email],
         subject: `Seu e-book chegou: ${ebookName}`,
         html: `

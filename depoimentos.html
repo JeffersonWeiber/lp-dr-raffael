@@ -10,6 +10,7 @@
     <title>Depoimentos | Dr. Raffael Slaviero</title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/style.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8sEmN5TN4OlR-HEiVcRQo4ZS1HWXWkio&libraries=places"></script>
   </head>
   <body class="bg-base-100 text-base-content">
     <header class="site-header">
@@ -62,51 +63,84 @@
             <img src="/depoimento4.webp" alt="Depoimento 7" class="proof-img" />
             <img src="/depoimento5.webp" alt="Depoimento 8" class="proof-img" />
           </div>
+
+          <!-- NOVA SEÇÃO: incentivo ao depoimento Google -->
+          <div class="google-cta-box" data-aos="fade-up">
+            <div class="cta-content">
+              <h3>Você é ou já foi paciente?</h3>
+              <p>Compartilhe sua experiência. Seu relato pode ajudar outras pessoas a encontrarem o acolhimento que precisam.</p>
+            </div>
+            <a href="https://search.google.com/local/writereview?placeid=ChIJ3-QEbBHV85QRsaacwNcB2xY" target="_blank" class="btn-primary">
+              Avaliar no Google
+            </a>
+          </div>
         </div>
       </section>
 
       <section class="section">
         <div class="site-shell">
-          <h2 class="section-title-small">Relatos narrados por pacientes</h2>
-          <div class="testimonials-grid" id="testimonials-full-list">
-            <!-- Gerado via JS ou inserido manualmente para ser estático (SEO) -->
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Atendimento cuidadoso desde o primeiro contato. A consulta trouxe clareza sobre o diagnóstico e segurança para seguir o tratamento."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"A condução clínica foi objetiva e humana. Me senti acolhida e, ao mesmo tempo, orientada com firmeza sobre os próximos passos."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Foi a primeira vez em muitos anos que percebi evolução real com acompanhamento psiquiátrico estruturado."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"No atendimento infantil, recebemos explicações claras para a família e um plano terapêutico que fez sentido para a rotina da criança."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Além do conhecimento técnico, o cuidado na escuta fez diferença. A consulta foi séria, respeitosa e muito esclarecedora."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Profissionalismo e empatia no equilíbrio certo. O tratamento foi conduzido com responsabilidade e acompanhamento contínuo."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Procurei atendimento com insegurança e encontrei um médico que transmite confiança desde a primeira conversa."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"A equipe de suporte e o atendimento médico funcionam em sintonia. Tudo ocorreu de forma organizada e acolhedora."</p>
-            </article>
-            <article class="testimonial-card-static">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"A comunicação sobre medicação, riscos e benefícios foi clara. Isso trouxe tranquilidade para seguir o plano terapêutico."</p>
-            </article>
+          <h2 class="section-title-small">Avaliações oficiais no Google</h2>
+          <div class="testimonials-grid" id="google-reviews-dynamic">
+            <!-- As avaliações serão carregadas dinamicamente aqui pelo reviews-client.js -->
+            <div class="loading-reviews">Conectando ao Google Meu Negócio...</div>
           </div>
+        </div>
+      </section>
+
+      <section class="section section-soft">
+        <div class="site-shell">
+          <h2 class="section-title-small">Relatos narrados por pacientes</h2>
+          <div class="testimonials-carousel-wrapper">
+            <button class="carousel-btn prev" aria-label="Anterior">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            
+            <div class="testimonials-carousel-container" id="testimonials-carousel">
+              <!-- Cards de depoimento -->
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Atendimento cuidadoso desde o primeiro contato. A consulta trouxe clareza sobre o diagnóstico e segurança para seguir o tratamento."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"A condução clínica foi objetiva e humana. Me senti acolhida e, ao mesmo tempo, orientada com firmeza sobre os próximos passos."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Foi a primeira vez em muitos anos que percebi evolução real com acompanhamento psiquiátrico estruturado."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"No atendimento infantil, recebemos explicações claras para a família e um plano terapêutico que fez sentido para a rotina da criança."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Além do conhecimento técnico, o cuidado na escuta fez diferença. A consulta foi séria, respeitosa e muito esclarecedora."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Profissionalismo e empatia no equilíbrio certo. O tratamento foi conduzido com responsabilidade e acompanhamento contínuo."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Procurei atendimento com insegurança e encontrei um médico que transmite confiança desde a primeira conversa."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"A equipe de suporte e o atendimento médico funcionam em sintonia. Tudo ocorreu de forma organizada e acolhedora."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"A comunicação sobre medicação, riscos e benefícios foi clara. Isso trouxe tranquilidade para seguir o plano terapêutico."</p>
+              </article>
+            </div>
+
+            <button class="carousel-btn next" aria-label="Próximo">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          
+          <div class="carousel-dots" id="carousel-dots"></div>
           
           <div class="center-content mt-8" style="display: flex; justify-content: center;">
             <a href="https://wa.link/vfitji" target="_blank" class="btn-primary">Agendar minha consulta</a>
@@ -173,6 +207,8 @@
     </div>
 
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/reviews-client.js"></script>
+    <script type="module" src="/src/carousel.js"></script>
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-KLK9P94V"
