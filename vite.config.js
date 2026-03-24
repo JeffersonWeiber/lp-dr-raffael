@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         depoimentos: resolve(__dirname, "depoimentos.html"),
+        materiais: resolve(__dirname, "materiais.html"),
       },
     },
   },
