@@ -5,12 +5,16 @@
  */
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
 // Mapeamento de links dos e-books (Substitua pelos seus links reais)
 const EBOOK_LINKS = {
-  "Será que é só uma fase?": "https://drraffaelslaviero.com.br/ebooks/fevereiro-2026-sera-que-e-so-uma fase.pdf",
-  "Pornografia e Saúde Mental": "https://drraffaelslaviero.com.br/ebooks/ebook-pornografia-e-saude-mental.pdf",
-  "10 Passos para Fortalecer sua Saúde Mental em 2026": "https://drraffaelslaviero.com.br/ebooks/10-passos-para-fortalecer-sua-saude mental-em-2026.pdf"
+  "Será que é só uma fase?":
+    "https://drraffaelslaviero.com.br/ebooks/fevereiro-2026-sera-que-e-so-uma%20fase.pdf",
+  "Pornografia e Saúde Mental":
+    "https://drraffaelslaviero.com.br/ebooks/ebook-pornografia-e-saude-mental.pdf",
+  "10 Passos para Fortalecer sua Saúde Mental em 2026":
+    "https://drraffaelslaviero.com.br/ebooks/10-passos-para-fortalecer-sua-saude%20mental-em-2026.pdf",
 };
 
 export default async function handler(req, res) {
@@ -33,6 +37,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    if (!RESEND_API_KEY) {
+      return res.status(500).json({
+        error: "Configuração ausente: defina RESEND_API_KEY na Vercel.",
+      });
+    }
+
     const { name, email, ebookName } = req.body;
     
     if (!name || !email || !ebookName) {
@@ -48,7 +58,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Dr. Raffael Slaviero <dr.raffaelslaviero@gmail.com>',
+        from: `Dr. Raffael Slaviero <${RESEND_FROM_EMAIL}>`,
         to: [email],
         subject: `Seu e-book chegou: ${ebookName}`,
         html: `
@@ -70,7 +80,24 @@ export default async function handler(req, res) {
       }),
     });
 
-    const data = await response.json();
+    const responseText = await response.text();
+    let data = {};
+
+    try {
+      data = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      data = { raw: responseText };
+    }
+
+    if (!response.ok) {
+      const resendMessage = data?.message || data?.error || "Falha ao enviar com Resend";
+      return res.status(502).json({
+        error: resendMessage,
+        provider: "resend",
+        details: data,
+      });
+    }
+
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ error: error.message });

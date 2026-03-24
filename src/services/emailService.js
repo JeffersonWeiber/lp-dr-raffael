@@ -31,7 +31,9 @@ export const emailService = {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Falha ao enviar o e-mail');
+        const statusMsg = `HTTP ${response.status}`;
+        const details = errorData.error || errorData.message || 'Falha ao enviar o e-mail';
+        throw new Error(`${statusMsg}: ${details}`);
       }
 
       return await response.json();

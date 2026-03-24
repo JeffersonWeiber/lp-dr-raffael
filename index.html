@@ -33,7 +33,6 @@
     </title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/style.css" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8sEmN5TN4OlR-HEiVcRQo4ZS1HWXWkio&libraries=places"></script>
     <link rel="preload" as="image" href="/backgroundHero.webp" />
 
     <script type="application/ld+json">
@@ -530,7 +529,8 @@
             form.reset();
             ebookSelected.value = '';
           } catch (error) {
-            alert('Ops! Ocorreu um erro ao processar seu pedido. Tente novamente em instantes.');
+            console.error('Falha ao enviar e-book:', error);
+            alert(`Ops! ${error.message || 'Ocorreu um erro ao processar seu pedido.'}`);
           } finally {
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;

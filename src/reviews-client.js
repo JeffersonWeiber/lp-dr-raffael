@@ -3,7 +3,43 @@
  * Suporta múltiplos containers (Home e Página de Depoimentos)
  */
 
-const GOOGLE_PLACE_ID = 'ChIJ3-QEbBHV85QRsaacwNcB2xY';
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const GOOGLE_PLACE_ID =
+  import.meta.env.VITE_GOOGLE_PLACE_ID || "ChIJ3-QEbBHV85QRsaacwNcB2xY";
+
+function loadGoogleMapsScript() {
+  if (window.google?.maps?.places) return Promise.resolve();
+
+  if (!GOOGLE_MAPS_API_KEY) {
+    return Promise.reject(
+      new Error("VITE_GOOGLE_MAPS_API_KEY não configurada.")
+    );
+  }
+
+  return new Promise((resolve, reject) => {
+    const existingScript = document.getElementById("google-maps-sdk");
+    if (existingScript) {
+      existingScript.addEventListener("load", () => resolve());
+      existingScript.addEventListener("error", () =>
+        reject(new Error("Falha ao carregar Google Maps SDK."))
+      );
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = "google-maps-sdk";
+    script.async = true;
+    script.defer = true;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
+      GOOGLE_MAPS_API_KEY
+    )}&libraries=places`;
+    script.onload = () => resolve();
+    script.onerror = () =>
+      reject(new Error("Falha ao carregar Google Maps SDK."));
+
+    document.head.appendChild(script);
+  });
+}
 
 async function initReviews() {
   // Inicializa em todos os containers de review do Google
@@ -12,7 +48,17 @@ async function initReviews() {
     document.getElementById('google-reviews-home')    // Index.html
   ];
 
-  if (!window.google) return;
+  try {
+    await loadGoogleMapsScript();
+  } catch (error) {
+    console.error("Erro ao inicializar Google Maps:", error);
+    containers.forEach((container) => {
+      if (container)
+        container.innerHTML =
+          '<p class="text-center text-red-500">Não foi possível carregar as avaliações no momento.</p>';
+    });
+    return;
+  }
 
   const mapElement = document.createElement('div');
   const service = new google.maps.places.PlacesService(mapElement);
