@@ -19,6 +19,36 @@ const EBOOK_LINKS = {
     "https://drraffaelslaviero.com.br/ebooks/10-passos-para-fortalecer-sua-saude-mental-em-2026.pdf",
 };
 
+function extractFilenameFromUrl(url) {
+  try {
+    const pathname = new URL(url).pathname;
+    const filename = pathname.split("/").pop();
+    return filename || "ebook.pdf";
+  } catch {
+    return "ebook.pdf";
+  }
+}
+
+async function buildPdfAttachment(downloadLink) {
+  const pdfResponse = await fetch(downloadLink);
+  if (!pdfResponse.ok) {
+    throw new Error(`Nao foi possivel baixar o PDF para anexo (${pdfResponse.status}).`);
+  }
+
+  const contentType = pdfResponse.headers.get("content-type") || "";
+  if (!contentType.includes("pdf")) {
+    throw new Error("O arquivo remoto nao parece ser um PDF valido.");
+  }
+
+  const arrayBuffer = await pdfResponse.arrayBuffer();
+  const content = Buffer.from(arrayBuffer).toString("base64");
+
+  return {
+    filename: extractFilenameFromUrl(downloadLink),
+    content,
+  };
+}
+
 function buildEbookEmailHtml({ name, ebookName, downloadLink }) {
   return `
     <div style="margin:0;padding:32px 16px;background-color:#f1f2f5;background-image:radial-gradient(circle at 15% 20%, rgba(47, 66, 222, 0.12) 0%, transparent 38%),radial-gradient(circle at 85% 75%, rgba(52, 175, 226, 0.16) 0%, transparent 42%),linear-gradient(180deg, #f7f9ff 0%, #eef3ff 100%);font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
@@ -144,6 +174,8 @@ export default async function handler(req, res) {
 
     const downloadLink = EBOOK_LINKS[ebookName] || EBOOK_LINKS["10 Passos para Fortalecer sua Saúde Mental em 2026"];
 
+    const attachment = await buildPdfAttachment(downloadLink);
+
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -155,6 +187,7 @@ export default async function handler(req, res) {
         to: [email],
         subject: `Seu e-book chegou: ${ebookName}`,
         html: buildEbookEmailHtml({ name, ebookName, downloadLink }),
+        attachments: [attachment],
       }),
     });
 
