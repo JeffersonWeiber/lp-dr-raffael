@@ -4,6 +4,9 @@
  * Caminho: api/send-ebook.js
  */
 
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const SITE_URL = "https://drraffaelslaviero.com.br";
@@ -12,41 +15,52 @@ const LOGO_URL = `${SITE_URL}/logo-white.webp`;
 // Mapeamento de links dos e-books (Substitua pelos seus links reais)
 const EBOOK_LINKS = {
   "Será que é só uma fase?":
-    "https://drraffaelslaviero.com.br/ebooks/fevereiro-2026-sera-que-e-so-uma-fase.pdf",
+    "https://ylqmqcokllzlkbncqrej.supabase.co/storage/v1/object/sign/Ebook%20Raffa/fevereiro-2026-sera-que-e-so-uma%20fase.pdf?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lY2ZhODVmZC1lOTEzLTQyMjUtYWI5Yi1hODM3M2EwMGJkOTkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJFYm9vayBSYWZmYS9mZXZlcmVpcm8tMjAyNi1zZXJhLXF1ZS1lLXNvLXVtYSBmYXNlLnBkZiIsImlhdCI6MTc3NDUzMjYzMywiZXhwIjoxODA2MDY4NjMzfQ.ustsN-QN2wc-Eq6xSR177ssb1_zQ2osOOGTVmGvtO9M",
   "Pornografia e Saúde Mental":
-    "https://drraffaelslaviero.com.br/ebooks/ebook-pornografia-e-saude-mental.pdf",
+    "https://ylqmqcokllzlkbncqrej.supabase.co/storage/v1/object/sign/Ebook%20Raffa/ebook-pornografia-e-saude-mental.pdf?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lY2ZhODVmZC1lOTEzLTQyMjUtYWI5Yi1hODM3M2EwMGJkOTkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJFYm9vayBSYWZmYS9lYm9vay1wb3Jub2dyYWZpYS1lLXNhdWRlLW1lbnRhbC5wZGYiLCJpYXQiOjE3NzQ1MzI2MDUsImV4cCI6MTgwNjA2ODYwNX0.YWGoLs2LsdHBJcOnse2nwENb6ycWesCJS2vMwiB582A",
   "10 Passos para Fortalecer sua Saúde Mental em 2026":
-    "https://drraffaelslaviero.com.br/ebooks/10-passos-para-fortalecer-sua-saude-mental-em-2026.pdf",
+    "https://ylqmqcokllzlkbncqrej.supabase.co/storage/v1/object/sign/Ebook%20Raffa/10-passos-para-fortalecer-sua-saude%20mental-em-2026.pdf?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lY2ZhODVmZC1lOTEzLTQyMjUtYWI5Yi1hODM3M2EwMGJkOTkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJFYm9vayBSYWZmYS8xMC1wYXNzb3MtcGFyYS1mb3J0YWxlY2VyLXN1YS1zYXVkZSBtZW50YWwtZW0tMjAyNi5wZGYiLCJpYXQiOjE3NzQ1MzI1MzAsImV4cCI6MTgwNjA2ODUzMH0.o42IDF6UF9Vi53I7jIFgeLbklgncemYHoWgaXk29vig",
 };
 
 function extractFilenameFromUrl(url) {
   try {
     const pathname = new URL(url).pathname;
     const filename = pathname.split("/").pop();
-    return filename || "ebook.pdf";
+    return decodeURIComponent(filename || "ebook.pdf");
   } catch {
     return "ebook.pdf";
   }
 }
 
 async function buildPdfAttachment(downloadLink) {
-  const pdfResponse = await fetch(downloadLink);
-  if (!pdfResponse.ok) {
-    throw new Error(`Nao foi possivel baixar o PDF para anexo (${pdfResponse.status}).`);
+  const filename = extractFilenameFromUrl(downloadLink);
+  const localFilePath = path.join(process.cwd(), "public", "ebooks", filename);
+
+  try {
+    const fileBuffer = await readFile(localFilePath);
+    return {
+      filename,
+      content: fileBuffer.toString("base64"),
+    };
+  } catch {
+    const pdfResponse = await fetch(downloadLink);
+    if (!pdfResponse.ok) {
+      throw new Error(`Nao foi possivel baixar o PDF para anexo (${pdfResponse.status}).`);
+    }
+
+    const contentType = pdfResponse.headers.get("content-type") || "";
+    if (!contentType.includes("pdf")) {
+      throw new Error("O arquivo remoto nao parece ser um PDF valido.");
+    }
+
+    const arrayBuffer = await pdfResponse.arrayBuffer();
+    const content = Buffer.from(arrayBuffer).toString("base64");
+
+    return {
+      filename,
+      content,
+    };
   }
-
-  const contentType = pdfResponse.headers.get("content-type") || "";
-  if (!contentType.includes("pdf")) {
-    throw new Error("O arquivo remoto nao parece ser um PDF valido.");
-  }
-
-  const arrayBuffer = await pdfResponse.arrayBuffer();
-  const content = Buffer.from(arrayBuffer).toString("base64");
-
-  return {
-    filename: extractFilenameFromUrl(downloadLink),
-    content,
-  };
 }
 
 function buildEbookEmailHtml({ name, ebookName, downloadLink }) {
@@ -174,7 +188,13 @@ export default async function handler(req, res) {
 
     const downloadLink = EBOOK_LINKS[ebookName] || EBOOK_LINKS["10 Passos para Fortalecer sua Saúde Mental em 2026"];
 
-    const attachment = await buildPdfAttachment(downloadLink);
+    let attachments = [];
+    try {
+      const attachment = await buildPdfAttachment(downloadLink);
+      attachments = [attachment];
+    } catch (attachmentError) {
+      console.error("Falha ao montar anexo do e-book:", attachmentError);
+    }
 
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -187,7 +207,7 @@ export default async function handler(req, res) {
         to: [email],
         subject: `Seu e-book chegou: ${ebookName}`,
         html: buildEbookEmailHtml({ name, ebookName, downloadLink }),
-        attachments: [attachment],
+        ...(attachments.length > 0 ? { attachments } : {}),
       }),
     });
 
