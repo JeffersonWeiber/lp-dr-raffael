@@ -729,6 +729,11 @@ a {
   gap: 1rem;
 }
 
+.premium-grid--single {
+  grid-template-columns: minmax(280px, 420px);
+  justify-content: center;
+}
+
 .premium-card {
   border: 1px solid #d6e0f2;
   border-radius: 1.2rem;

@@ -10,6 +10,18 @@
     <title>Materiais Premium | Dr. Raffael Slaviero</title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./src/style.css" />
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KLK9P94V");
+    </script>
   </head>
   <body class="bg-base-100 text-base-content">
     <header class="site-header">
@@ -55,83 +67,29 @@
 
       <section class="section">
         <div class="site-shell">
-          <div class="premium-grid" data-aos="fade-up">
+          <div class="premium-grid premium-grid--single" data-aos="fade-up">
             <article class="premium-card">
               <div class="premium-cover-wrap">
                 <img
-                  src="/ebooks/covers/capa-fase.png"
-                  alt="Capa do e-book Será que é só uma fase?"
+                  src="/ebooks/covers/capa-educar-sem-gritar.png"
+                  alt="Capa do e-book Educar Sem Gritar"
                   class="premium-cover"
                 />
               </div>
               <div class="premium-body">
                 <span class="premium-chip">E-book</span>
-                <h2>Será que é só uma fase?</h2>
+                <h2>Ebook Educar Sem Gritar</h2>
                 <p>
-                  Entenda sinais de alerta, diferenças entre fases esperadas e sintomas que
-                  pedem acompanhamento especializado.
+                  Um guia prático de Disciplina Positiva para pais reais.
                 </p>
-                <div class="premium-price">R$ 97,00</div>
                 <a
-                  href="https://hotmart.com/"
+                  href="https://pay.hotmart.com/O104751903B?bid=1774533623723"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn-primary"
-                  aria-label="Comprar e-book Será que é só uma fase?"
-                  >Comprar na Hotmart</a
-                >
-              </div>
-            </article>
-
-            <article class="premium-card">
-              <div class="premium-cover-wrap">
-                <img
-                  src="/ebooks/covers/capa-pornografia.png"
-                  alt="Capa do e-book Pornografia e Saúde Mental"
-                  class="premium-cover"
-                />
-              </div>
-              <div class="premium-body">
-                <span class="premium-chip">E-book</span>
-                <h2>Pornografia e Saúde Mental</h2>
-                <p>
-                  Uma abordagem direta sobre impacto emocional, compulsão, autoestima e estratégias
-                  práticas para recuperar autonomia.
-                </p>
-                <div class="premium-price">R$ 127,00</div>
-                <a
-                  href="https://hotmart.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-primary"
-                  aria-label="Comprar e-book Pornografia e Saúde Mental"
-                  >Comprar na Hotmart</a
-                >
-              </div>
-            </article>
-
-            <article class="premium-card">
-              <div class="premium-cover-wrap">
-                <img
-                  src="/ebooks/covers/capa-10passos.png"
-                  alt="Capa do e-book 10 Passos para Fortalecer sua Saúde Mental em 2026"
-                  class="premium-cover"
-                />
-              </div>
-              <div class="premium-body">
-                <span class="premium-chip">E-book</span>
-                <h2>10 Passos para Fortalecer sua Saúde Mental em 2026</h2>
-                <p>
-                  Plano estruturado para organizar hábitos, regular emoções e sustentar uma rotina
-                  com mais clareza e consistência.
-                </p>
-                <div class="premium-price">R$ 147,00</div>
-                <a
-                  href="https://hotmart.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-primary"
-                  aria-label="Comprar e-book 10 Passos para Fortalecer sua Saúde Mental em 2026"
+                  class="btn-primary js-hotmart-ebook"
+                  aria-label="Comprar e-book Educar Sem Gritar na Hotmart"
+                  data-ebook-name="Ebook Educar Sem Gritar"
+                  data-ebook-destination="hotmart"
                   >Comprar na Hotmart</a
                 >
               </div>
@@ -209,6 +167,32 @@
     </div>
 
     <script type="module" src="/src/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hotmartButtons = document.querySelectorAll(".js-hotmart-ebook");
+        hotmartButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "hotmart_click",
+              event_category: "ebook",
+              event_action: "click_hotmart",
+              event_label: button.dataset.ebookName || "ebook",
+              destination: button.dataset.ebookDestination || "hotmart",
+              page_path: window.location.pathname,
+              page_url: window.location.href,
+            });
+
+            if (typeof window.fbq === "function") {
+              window.fbq("trackCustom", "HotmartClick", {
+                ebook_name: button.dataset.ebookName || "ebook",
+                destination: button.dataset.ebookDestination || "hotmart",
+              });
+            }
+          });
+        });
+      });
+    </script>
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-KLK9P94V"
