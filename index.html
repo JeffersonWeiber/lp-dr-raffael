@@ -7,10 +7,6 @@
       name="description"
       content="Dr. Raffael Slaviero, médico psiquiatra (CRM 38.831 | RQE 29.968), com atendimento humanizado para adultos, crianças e adolescentes em Cascavel-PR e online por agendamento."
     />
-    <meta
-      name="keywords"
-      content="psiquiatra cascavel, psiquiatra adulto, psiquiatra infantil, tdah, autismo, ansiedade, depressão, saúde mental"
-    />
     <meta name="author" content="Dr. Raffael Sehn Slaviero" />
     <meta property="og:type" content="website" />
     <meta
@@ -26,6 +22,24 @@
       content="https://drraffaelslavieropsiquiatra.com/"
     />
     <meta property="og:site_name" content="Dr. Raffael Slaviero" />
+    <meta
+      property="og:image"
+      content="https://drraffaelslavieropsiquiatra.com/hero.webp"
+    />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Dr. Raffael Slaviero | Psiquiatria com abordagem humana e especializada"
+    />
+    <meta
+      name="twitter:description"
+      content="Atendimento psiquiátrico para adultos, crianças e adolescentes, com avaliação criteriosa e plano terapêutico individualizado."
+    />
+    <meta
+      name="twitter:image"
+      content="https://drraffaelslavieropsiquiatra.com/hero.webp"
+    />
     <link rel="canonical" href="https://drraffaelslavieropsiquiatra.com/" />
     <title>
       Dr. Raffael Slaviero | Psiquiatra em Cascavel para adultos, crianças e
@@ -38,17 +52,32 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Physician",
-        "name": "Dr. Raffael Sehn Slaviero",
-        "medicalSpecialty": "Psychiatry",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Cascavel",
-          "addressRegion": "PR",
-          "addressCountry": "BR"
-        },
-        "url": "https://drraffaelslavieropsiquiatra.com/",
-        "telephone": "+5545988170372"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://drraffaelslavieropsiquiatra.com/#organization",
+            "name": "Dr. Raffael Slaviero",
+            "url": "https://drraffaelslavieropsiquiatra.com/",
+            "logo": "https://drraffaelslavieropsiquiatra.com/logo.webp"
+          },
+          {
+            "@type": "Physician",
+            "@id": "https://drraffaelslavieropsiquiatra.com/#physician",
+            "name": "Dr. Raffael Sehn Slaviero",
+            "medicalSpecialty": "Psychiatry",
+            "telephone": "+5545988170372",
+            "url": "https://drraffaelslavieropsiquiatra.com/",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Cascavel",
+              "addressRegion": "PR",
+              "addressCountry": "BR"
+            },
+            "worksFor": {
+              "@id": "https://drraffaelslavieropsiquiatra.com/#organization"
+            }
+          }
+        ]
       }
     </script>
 
