@@ -10,7 +10,7 @@ import path from "node:path";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 const SITE_URL = "https://drraffaelslaviero.com.br";
-const LOGO_URL = `${SITE_URL}/logo-white.webp`;
+const LOGO_URL = "https://ylqmqcokllzlkbncqrej.supabase.co/storage/v1/object/sign/Ebook%20Raffa/logo-white.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lY2ZhODVmZC1lOTEzLTQyMjUtYWI5Yi1hODM3M2EwMGJkOTkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJFYm9vayBSYWZmYS9sb2dvLXdoaXRlLndlYnAiLCJpYXQiOjE3NzQ1NDg4MTEsImV4cCI6MTgwNjA4NDgxMX0.6C8Ps6vbHMEjc2RapXZwZvdf6CkjzM1144pAB4r3NGQ";
 
 // Mapeamento de links dos e-books (Substitua pelos seus links reais)
 const EBOOK_LINKS = {
