@@ -133,6 +133,18 @@
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">"A comunicação sobre medicação, riscos e benefícios foi clara. Isso trouxe tranquilidade para seguir o plano terapêutico."</p>
               </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Boa tarde Dr.! Desculpa a demora em responder, acabei viajando e esqueci de retornar, mas está tudo bem comigo também! Já estou fazendo o uso dos medicamentos e parece estar sendo diferente, no bom sentido! Tive uma sessão com a XXX sábado, gostaria de agradecer sua atenção e comprometimento com o meu caso, ressalto que ganhou vários elogios, e agora deixo o meu tbm! Difícil encontrar bons profissionais hoje em dia, agradeço de coração pelo cuidado, desde a recepção até o momento, tudo muito diferenciado de verdade!! Gratidão!"</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Em 2026, que a gente mergulhe na mente, buscando clareza e um equilíbrio emocional que realmente importa. Que a saúde mental seja a nossa âncora para um bem-estar autêntico e muitas descobertas internas. Feliz Ano Novo! ✨🥂 Agradeço seu apoio nessa jornada."</p>
+              </article>
+              <article class="testimonial-card-carousel">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"Bom doutor, agradeço pelas palavras e pelo acompanhamento. Fico muito feliz pela oportunidade que o senhor proporciona aqui pelo whatsapp."</p>
+              </article>
             </div>
 
             <button class="carousel-btn next" aria-label="Próximo">
@@ -210,6 +222,40 @@
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/reviews-client.js"></script>
     <script type="module" src="/src/carousel.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.testimonial-card-carousel:not(.google-review-card)').forEach(card => {
+          const text = card.querySelector('.testimonial-text');
+          if (!text) return;
+
+          if (!text.parentElement.classList.contains('testimonial-text-body')) {
+            const textBody = document.createElement('div');
+            textBody.className = 'testimonial-text-body';
+            text.parentNode.insertBefore(textBody, text);
+            textBody.appendChild(text);
+          }
+
+          const needsToggle = text.textContent.trim().length > 180;
+          if (!needsToggle) return;
+
+          let toggle = card.querySelector('.testimonial-more');
+          if (!toggle) {
+            toggle = document.createElement('button');
+            toggle.className = 'testimonial-more';
+            toggle.textContent = 'Ver mais';
+            card.appendChild(toggle);
+          }
+
+          card.classList.add('has-collapsible');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.addEventListener('click', () => {
+            const expanded = card.classList.toggle('expanded');
+            toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            toggle.textContent = expanded ? 'Ver menos' : 'Ver mais';
+          });
+        });
+      });
+    </script>
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-KLK9P94V"

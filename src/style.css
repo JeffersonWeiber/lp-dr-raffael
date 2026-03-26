@@ -1859,10 +1859,21 @@ a {
 
 .google-review-card {
   transition: transform 0.3s ease;
+  min-height: 360px;
 }
 
 .google-review-card:hover {
   transform: translateY(-5px);
+}
+
+.google-review-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.google-review-text {
+  line-height: 1.7;
+  margin: 0;
 }
 
 .google-author {
@@ -1902,6 +1913,54 @@ a {
   border-top: 1px solid #f0f3f9;
 }
 
+.google-review-card.has-google-collapse {
+  position: relative;
+}
+
+.google-review-card.has-google-collapse .google-review-body {
+  max-height: 9.2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.google-review-card.has-google-collapse .google-review-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.98) 100%);
+  pointer-events: none;
+}
+
+.google-review-card.google-expanded .google-review-body {
+  max-height: none;
+}
+
+.google-review-more {
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  border: none;
+  background: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.88rem;
+}
+
+#google-reviews-home .google-review-card {
+  min-height: 360px;
+}
+
+@media (max-width: 768px) {
+  .google-review-card,
+  #google-reviews-home .google-review-card {
+    min-height: 320px;
+  }
+}
+
 .loading-reviews {
   grid-column: 1 / -1;
   text-align: center;
@@ -1937,6 +1996,7 @@ a {
 .testimonial-card-carousel {
   flex: 0 0 calc(33.333% - 1.34rem);
   min-width: 300px;
+  min-height: 360px;
   scroll-snap-align: start;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1962,11 +2022,52 @@ a {
 
 @media (max-width: 768px) {
   .testimonial-card-carousel {
-    flex: 0 0 100%;
+  flex: 0 0 100%;
   }
   .testimonials-carousel-wrapper {
     padding: 0;
   }
+}
+
+.testimonial-card-carousel.has-collapsible {
+  position: relative;
+}
+
+.testimonial-card-carousel .testimonial-text-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.testimonial-card-carousel.has-collapsible .testimonial-text-body {
+  overflow: hidden;
+}
+
+.testimonial-card-carousel.has-collapsible .testimonial-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
+.testimonial-card-carousel .testimonial-more {
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+
+.testimonial-card-carousel.expanded .testimonial-text-body {
+  max-height: none;
+}
+
+.testimonial-card-carousel.expanded .testimonial-text {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: initial;
 }
 
 .carousel-btn {
