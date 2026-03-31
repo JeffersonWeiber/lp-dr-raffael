@@ -111,15 +111,49 @@
           <a href="#duvidas">Dúvidas</a>
         </nav>
 
-        <a
-          class="btn-primary btn-inline"
-          href="https://wa.link/vfitji"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Agendar consulta pelo WhatsApp"
-          >Agendar consulta</a
-        >
+        <div class="header-actions">
+          <a
+            class="btn-primary btn-inline"
+            href="https://wa.link/vfitji"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Agendar consulta pelo WhatsApp"
+            >Agendar consulta</a
+          >
+          
+          <button id="mobile-menu-toggle" class="hamburger-btn" aria-label="Abrir menu">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </button>
+        </div>
       </div>
+
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Navegação móvel">
+        <div class="mobile-overlay"></div>
+        <div class="mobile-nav-panel">
+          <div class="mobile-nav-header">
+            <a href="#inicio" class="brand-mark mobile-brand">
+              <img src="/simbolo.webp" alt="Símbolo Dr. Raffael Slaviero" />
+            </a>
+            <button id="mobile-menu-close" class="close-btn" aria-label="Fechar menu">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="mobile-nav-links">
+            <a href="#atendimento">Atendimento</a>
+            <a href="#especialidades">Especialidades</a>
+            <a href="#sobre">Sobre o médico</a>
+            <a href="/materiais.html">Materiais</a>
+            <a href="/depoimentos.html">Relatos Reais</a>
+            <a href="#contato">Contato</a>
+            <a href="#duvidas">Dúvidas</a>
+          </div>
+          <div class="mobile-nav-footer">
+            <a href="https://wa.link/vfitji" target="_blank" class="btn-primary w-full text-center">Agendar Consulta</a>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main>
