@@ -5,6 +5,70 @@ import { initAOS } from "./js/aos";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const normalizeText = (value = "") =>
+    value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+
+  const detectWhatsappIntent = (link) => {
+    const explicitIntent = link.dataset.whatsappIntent;
+    if (explicitIntent) return explicitIntent;
+
+    const hrefText = normalizeText(decodeURIComponent(link.href || ""));
+    const linkText = normalizeText(link.textContent || "");
+    const ariaText = normalizeText(link.getAttribute("aria-label") || "");
+    const combinedText = `${hrefText} ${linkText} ${ariaText}`;
+
+    if (combinedText.includes("adulto")) return "adulto";
+    if (combinedText.includes("infantil") || combinedText.includes("crianca")) {
+      return "infantil";
+    }
+
+    return "geral";
+  };
+
+  const detectWhatsappPlacement = (link) => {
+    const explicitPlacement = link.dataset.whatsappPlacement;
+    if (explicitPlacement) return explicitPlacement;
+
+    if (link.closest(".mobile-nav")) return "menu_mobile";
+    if (link.closest(".site-header")) return "cabecalho";
+    if (link.closest(".site-footer")) return "rodape";
+
+    const section = link.closest("section[id]");
+    if (section?.id) return section.id;
+
+    return "pagina";
+  };
+
+  const bindWhatsappTracking = () => {
+    const whatsappLinks = document.querySelectorAll(
+      'a[href*="wa.link"], a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp.com/send"]'
+    );
+
+    whatsappLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        const intent = detectWhatsappIntent(link);
+        const placement = detectWhatsappPlacement(link);
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "whatsapp_click",
+          event_category: "lead",
+          event_action: "click_whatsapp",
+          event_label: `${intent}_${placement}`,
+          whatsapp_intent: intent,
+          whatsapp_placement: placement,
+          whatsapp_url: link.href,
+          link_text: (link.textContent || "").trim(),
+          page_path: window.location.pathname,
+          page_url: window.location.href,
+        });
+      });
+    });
+  };
+
   document.querySelectorAll("article").forEach((carousel) => {
     const track = carousel.querySelector("[data-carousel]");
     if (!track) return;
@@ -55,4 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cookieBanner.classList.remove("show");
     });
   }
+
+  bindWhatsappTracking();
 });
