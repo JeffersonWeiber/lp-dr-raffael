@@ -1943,14 +1943,18 @@ a {
   }
 
   .btn-inline {
-    display: none; /* Esconda o CTA do topo no mobile pequeno, fica no menu */
+    display: inline-flex;
+    min-height: 2.3rem;
+    font-size: 0.74rem;
+    padding: 0.45rem 0.68rem;
+    white-space: nowrap;
   }
 
-  @media (min-width: 500px) {
+  @media (max-width: 420px) {
     .btn-inline {
-      display: inline-flex;
-      font-size: 0.76rem;
-      padding: 0.48rem 0.74rem;
+      min-height: 2.2rem;
+      font-size: 0.69rem;
+      padding: 0.4rem 0.58rem;
     }
   }
 
