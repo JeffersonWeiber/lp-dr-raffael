@@ -184,22 +184,20 @@
             <div class="hero-buttons-container">
               <div class="hero-buttons-split">
                 <a
+                  id="btn-whatsapp-adulto"
                   href="https://api.whatsapp.com/send?phone=5545988170372&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20para%20um%20adulto!"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn-outline-white"
-                  data-whatsapp-intent="adulto"
-                  data-whatsapp-placement="hero_adulto"
                   aria-label="Agendar consulta para Adulto"
                   >Adulto</a
                 >
                 <a
+                  id="btn-whatsapp-infantil"
                   href="https://api.whatsapp.com/send?phone=5545988170372&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20para%20uma%20crian%C3%A7a!"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn-outline-white"
-                  data-whatsapp-intent="infantil"
-                  data-whatsapp-placement="hero_infantil"
                   aria-label="Agendar consulta para Infantil"
                   >Infantil</a
                 >
@@ -656,11 +654,20 @@
           const originalText = submitBtn.innerText;
           
           try {
+            isSubmitting = true;
             submitBtn.disabled = true;
             submitBtn.innerText = 'Enviando...';
 
             await emailService.sendEbook(name, email, ebook);
             
+            // GTM Success Tracking
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              'event': 'ebook_download_success',
+              'ebook_name': ebook,
+              'user_email': email
+            });
+
             console.log('E-mail enviado via Resend:', { name, email, ebook });
             
             alert(`Obrigado, ${name}! Seu e-book "${ebook}" será enviado para ${email} em instantes.`);
@@ -670,6 +677,7 @@
             console.error('Falha ao enviar e-book:', error);
             alert(`Ops! ${error.message || 'Ocorreu um erro ao processar seu pedido.'}`);
           } finally {
+            isSubmitting = false;
             submitBtn.disabled = false;
             submitBtn.innerText = originalText;
           }
