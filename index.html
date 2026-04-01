@@ -628,14 +628,51 @@
         </div>
       </section>
 
+      <div id="toast-container" class="toast-container"></div>
+
       <script type="module">
         import { emailService } from './src/services/emailService.js';
 
         const form = document.getElementById('ebook-form');
         const ebookSelected = document.getElementById('ebook-selected');
+        const toastContainer = document.getElementById('toast-container');
         
-        // Controle de submissão para evitar disparos duplicados
         let isSubmitting = false;
+
+        // Função de Notificação Personalizada
+        function showNotification(title, message, type = 'success') {
+          const toast = document.createElement('div');
+          toast.className = `toast-item toast-${type}`;
+          
+          const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+          
+          toast.innerHTML = `
+            <div class="toast-icon">
+              <i class="bi ${icon}"></i>
+            </div>
+            <div class="toast-content">
+              <span class="toast-title">${title}</span>
+              <span class="toast-message">${message}</span>
+            </div>
+          `;
+          
+          toastContainer.appendChild(toast);
+          
+          // Animação de entrada
+          setTimeout(() => toast.classList.add('show'), 10);
+          
+          // Auto-remove após 5 segundos
+          const timer = setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+          }, 5000);
+          
+          toast.addEventListener('click', () => {
+            clearTimeout(timer);
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+          });
+        }
 
         // Sincronizar radio dos cards com o campo hidden do form
         document.querySelectorAll('.ebook-radio-input').forEach(radio => {
@@ -647,7 +684,7 @@
         // Interceptar envio do formulário
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          e.stopImmediatePropagation(); // Evita que ouvintes automáticos do GTM disparem em paralelo
+          e.stopImmediatePropagation();
 
           if (isSubmitting) return;
           
@@ -656,7 +693,7 @@
           const ebook = ebookSelected.value;
 
           if (!ebook) {
-            alert('Por favor, selecione um e-book antes de continuar.');
+            showNotification('Atenção', 'Por favor, selecione um e-book antes de continuar.', 'error');
             return;
           }
 
@@ -670,7 +707,6 @@
 
             await emailService.sendEbook(name, email, ebook);
             
-            // GTM Success Tracking - Sincronizado com o seu gatilho 'form_submit'
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
               'event': 'form_submit',
@@ -678,14 +714,12 @@
               'user_email': email
             });
 
-            console.log('E-mail enviado via Resend:', { name, email, ebook });
-            
-            alert(`Obrigado, ${name}! Seu e-book "${ebook}" será enviado para ${email} em instantes.`);
+            showNotification('Sucesso!', `Obrigado, ${name}! Seu e-book será enviado para o seu e-mail em instantes.`, 'success');
             form.reset();
             ebookSelected.value = '';
           } catch (error) {
             console.error('Falha ao enviar e-book:', error);
-            alert(`Ops! ${error.message || 'Ocorreu um erro ao processar seu pedido.'}`);
+            showNotification('Erro no envio', 'Ops! Ocorreu um erro ao processar seu pedido. Tente novamente mais tarde.', 'error');
           } finally {
             isSubmitting = false;
             submitBtn.disabled = false;
@@ -1014,5 +1048,68 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
+      <div id="promo-modal" class="promo-modal-overlay"> 
+        <div class="promo-modal-card"> 
+          <button id="close-promo" class="promo-modal-close" aria-label="Fechar"> 
+            <i class="bi bi-x-lg"></i> 
+          </button> 
+          <div class="promo-modal-image"> 
+            <i class="bi bi-book-half"></i> 
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;"> 
+                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&q=80" alt="E-book Promoção" style="width: 100%; height: 100%; object-fit: cover;"> 
+                <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, transparent 60%);"></div> 
+            </div> 
+          </div> 
+          <div class="promo-modal-body"> 
+            <span class="promo-modal-badge">Material Exclusivo</span> 
+            <h2>Será que é só uma fase?</h2> 
+            <p>Descubra como a pornografia impacta a saúde mental e como retomar o controle. Um guia prático e direto para a transformação.</p> 
+            <a href="https://pay.hotmart.com/SEU_ID_AQUI" target="_blank" class="btn-primary w-full" id="btn-promo-hotmart">Quero meu E-book Agora</a> 
+            <button id="not-now-promo" style="margin-top: 1rem; background: none; border: none; font-size: 0.8rem; color: #94a3b8; cursor: pointer; text-decoration: underline;">Talvez mais tarde</button> 
+          </div> 
+        </div> 
+      </div> 
+
+      <script> 
+        document.addEventListener("DOMContentLoaded", () => { 
+          const promoModal = document.getElementById("promo-modal"); 
+          const closePromo = document.getElementById("close-promo"); 
+          const notNowPromo = document.getElementById("not-now-promo"); 
+          const btnPromo = document.getElementById("btn-promo-hotmart"); 
+
+          const showModal = () => { 
+            if (!sessionStorage.getItem("promo_closed")) { 
+              promoModal.classList.add("is-active"); 
+            } 
+          }; 
+
+          const hideModal = () => { 
+            promoModal.classList.remove("is-active"); 
+            sessionStorage.setItem("promo_closed", "true"); 
+          }; 
+
+          setTimeout(showModal, 8000); 
+
+          if (closePromo) closePromo.addEventListener("click", hideModal); 
+          if (notNowPromo) notNowPromo.addEventListener("click", hideModal); 
+          if (promoModal) { 
+            promoModal.addEventListener("click", (e) => { 
+              if (e.target === promoModal) hideModal(); 
+            }); 
+          } 
+
+          if (btnPromo) { 
+            btnPromo.addEventListener("click", () => { 
+              window.dataLayer = window.dataLayer || []; 
+              window.dataLayer.push({ 
+                "event": "promo_click", 
+                "promo_name": "ebook_hotmart_fase", 
+                "promo_placement": "delayed_modal" 
+              }); 
+              hideModal(); 
+            }); 
+          } 
+        }); 
+      </script>
   </body>
 </html>
