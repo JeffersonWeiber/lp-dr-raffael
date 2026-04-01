@@ -52,19 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const intent = detectWhatsappIntent(link);
         const placement = detectWhatsappPlacement(link);
 
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
+        // Payload unificado e simplificado solicitado pelo usuário
+        const gtmEvent = {
           event: "whatsapp_click",
-          event_category: "lead",
-          event_action: "click_whatsapp",
-          event_label: `${intent}_${placement}`,
           whatsapp_intent: intent,
           whatsapp_placement: placement,
           whatsapp_url: link.href,
-          link_text: (link.textContent || "").trim(),
-          page_path: window.location.pathname,
-          page_url: window.location.href,
-        });
+          link_text: (link.textContent || "").trim()
+        };
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(gtmEvent);
+
+        // Log para validação direta no console F12
+        console.log("🟢 [GTM Tracking] WhatsApp Click:", gtmEvent);
       });
     });
   };
