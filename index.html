@@ -629,6 +629,9 @@
 
         const form = document.getElementById('ebook-form');
         const ebookSelected = document.getElementById('ebook-selected');
+        
+        // Controle de submissão para evitar disparos duplicados
+        let isSubmitting = false;
 
         // Sincronizar radio dos cards com o campo hidden do form
         document.querySelectorAll('.ebook-radio-input').forEach(radio => {
@@ -640,6 +643,9 @@
         // Interceptar envio do formulário
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
+          e.stopImmediatePropagation(); // Evita que ouvintes automáticos do GTM disparem em paralelo
+
+          if (isSubmitting) return;
           
           const name = document.getElementById('lead_name').value;
           const email = document.getElementById('lead_email').value;
@@ -660,10 +666,10 @@
 
             await emailService.sendEbook(name, email, ebook);
             
-            // GTM Success Tracking
+            // GTM Success Tracking - Sincronizado com o seu gatilho 'form_submit'
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-              'event': 'ebook_download_success',
+              'event': 'form_submit',
               'ebook_name': ebook,
               'user_email': email
             });
